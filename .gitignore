@@ -1,0 +1,21 @@
+# virtual env
+venv/
+.env/
+
+# Python junk
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Jupyter
+.ipynb_checkpoints/
+
+# IDE
+.vscode/
+.idea/
+
+# builds
+dist/
+build/
+*.egg-info/
