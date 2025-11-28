@@ -260,6 +260,8 @@ def train(model, train_loader, val_loader, epochs, lr, use_heatmap=True, use_mas
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--base_dir', type=str, default='', help='Path to dataset directory')
+    parser.add_argument('--dataset_type', type=str, default='', help='Type of dataset that need to be preprocess')
+    parser.add_argument('--num_subset', type=int, default=-1)
     parser.add_argument('--preprocessed_dir', type=str, default='/home/arssist/trocar_tracking/trocar_processing/dataset/preprocess_comb_ext_newmask', help='Path to preprocessed output directory')
     # parser.add_argument('--yolo_path', type=str, required=True, help='Path to trained YOLO model (if needed for fallback cropping)')
     parser.add_argument('--epochs', type=int, default=200)
@@ -269,8 +271,9 @@ if __name__ == '__main__':
     parser.add_argument('--use_mask', action='store_true', help='Use segmentation mask as input')
     # parser.add_argument('--sigma', type=float, default=5.0, help='Sigma for Gaussian heatmaps if using heatmap')
     args = parser.parse_args()
-    # # Run preprocessing if not already done
-    # preprocess_all(args.base_dir, args.preprocessed_dir, use_mask=args.use_mask)
+    
+    if args.base_dir and args.dataset_type and args.num_subset > 0:
+        preprocess_all(args.base_dir, args.preprocessed_dir, args.dataset_type, args.num_subset,use_mask=args.use_mask)
 
     # #########################
     train_loader, val_loader = get_dataloaders(args.preprocessed_dir, batch_size=args.batch_size, use_mask=args.use_mask)

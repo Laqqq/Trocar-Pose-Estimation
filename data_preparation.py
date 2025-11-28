@@ -350,16 +350,16 @@ def preprocess_data(
         valid_count += 1
     print(f"Preprocessed and saved {valid_count} valid images out of {len(all_files)} from {image_dir}")
 
-def preprocess_all(base_dir,preprocessed_dir,use_mask=False,crop_size=256):
+def preprocess_all(base_dir,preprocessed_dir,dataset_type,num_subset,use_mask=False,crop_size=256):
     """Batch preprocess helper (currently covers the 'new' dataset splits)."""
-    for sub in range(1, 14):
+    for sub in range(1, num_subset):
         sub_dir = str(sub)
         image_dir = os.path.join(base_dir, sub_dir, 'output', 'rgb')
         ann_dir = os.path.join(base_dir, sub_dir, 'output', 'keypoints_prop')
         pose_dir = os.path.join(base_dir, sub_dir, 'output', 'pose')
         if not os.path.exists(image_dir):
             continue
-        prefix = f'new{sub_dir}_'
+        prefix = f'{dataset_type}{sub_dir}_'
         preprocess_data(
             image_dir,
             ann_dir,
